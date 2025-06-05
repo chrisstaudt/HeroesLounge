@@ -1,0 +1,36 @@
+#docker-compose.yml
+services:
+  web:
+    platform: linux/x86_64
+    image: aspendigital/octobercms:latest
+    volumes:
+      - ./plugins/rikki:/var/www/html/plugins/rikki
+      - ./themes/:/var/www/html/themes
+    ports:
+      - 80:80
+    environment:
+      - DB_TYPE=mysql
+      - DB_HOST=mysql #DB_HOST should match the service name of the database container
+      - DB_DATABASE=octobercms
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+      - CMS_DISABLE_CORE_UPDATES=false
+    networks:
+      - backend
+    depends_on:
+      - mysql
+
+  mysql:
+    platform: linux/x86_64
+    image: mysql:5.7
+    volumes:
+      - ./dump-hl_main_copy-202101171648.sql:/docker-entrypoint-initdb.d/datadump.sql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=octobercms
+    networks:
+      - backend
+networks:
+  backend:

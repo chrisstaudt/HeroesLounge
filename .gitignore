@@ -12,7 +12,8 @@
 /plugins/rikki/heroeslounge/assets/partials/*
 /plugins/rikki/heroeslounge/assets/scss/*
 /themes/HeroesLounge-Theme/pages/test.htm
-
+!docker-compose.yml
+!dump-hl_main_copy-202101171648.sql
 !Vagrantfile
 !install_october.sh
 !install_hl.sh
